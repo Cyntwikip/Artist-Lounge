@@ -1,0 +1,110 @@
+
+.profile-header{
+/*    background-color: palevioletred;*/
+/*    background-color: rgb(9,131,212);*/
+    background-color: rgb(250,92,128);
+}
+
+.profile-header-center{
+    display: block;
+    position: relative;
+    height: 300px;
+}
+
+.profile-picture{
+/*    display: inline-block;*/
+    position: absolute;
+/*    vertical-align: center;*/
+    
+    width: 215px;
+    height: 215px;
+    border-radius: 50%;
+    background-color: blue;
+    border: 10px solid white;
+/*    margin-left: 20px;*/
+    bottom: -80px;
+    left: 40px;
+    
+/*    background-image: url('/assets/Luna Lovegood.png');*/
+/*    background-position: center;*/
+}
+
+.profile-name{
+    position: absolute;
+    left: 300px;
+    bottom: 20px;
+    
+    color: white;
+    font-size: 40px;
+    font-weight: 700;
+    
+}
+
+.profile-content{
+    
+/*    height: 1000px;*/
+/*    background-color: rgba(29,161,242,0.1);*/
+/*    background-color: rgba(29,161,242,0.2);*/
+    background-color: rgb(223,240,250);
+}
+
+.profile-summary{
+    height: 60px;
+    background-color: white;
+    margin-bottom: 20px;
+}
+
+hr{
+    margin: 10px;
+/*    color: rgba(9,141,222,1);*/
+}
+
+.profile-details{
+/*    height: 400px;*/
+    
+    background-color: white;
+    border-radius: 10px;
+/*    border: 2px solid rgb(9,141,222);*/
+    border: 2px solid rgb(230,62,98);
+    padding: 0px;
+    padding-bottom: 15px;
+    margin: 20px 10px;
+}
+
+.profile-details-header{
+/*    background-color: dodgerblue;*/
+/*    background-color: rgb(9,141,222);*/
+/*    background-color: rgb(137,56,67);*/
+/*    paradise pink*/
+    background-color: rgb(230,62,98);
+
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px 5px 0px 0px;
+    font-size: 20px;
+    
+}
+
+.profile-details-content{
+    margin: 0px 30px;
+    font-size: 15px;
+/*    font-weight: 500;*/
+    color: rgb(0,101,182);
+}
+
+
+#friends-list{
+    text-align: center;
+}
+
+.friend-dp{
+    
+    height: 70px;
+    width: 70px;
+    
+    margin: 10px;
+    border-radius: 50%;
+    border: 2px solid rgb(230,62,98);
+    
+}
+

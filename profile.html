@@ -1,0 +1,139 @@
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <link rel="stylesheet" type="text/css" href="css/profile.css">
+        <link rel="stylesheet" type="text/css" href="css/navbar.css">
+        <link rel="stylesheet" type="text/css" href="css/post.css">
+        
+
+      
+        <script src="js/jquery-2.2.0.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/post.js"></script>
+    </head>
+    
+    <body>        
+        <nav class="navbar navbar-default navbar-fixed-top">
+          <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">
+<!--                    <img alt="Artist's Lounge" src="logo"></img>-->
+                    Artist's Lounge
+                </a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav">
+                <li><a href="home.html">Home</a></li>
+                <li class="active"><a href="#">Profile <span class="sr-only">(current)</span></a></li>
+                <li><a href="#">Notifications</a></li>
+                <li><a href="#">Challenge</a></li>
+              </ul>
+                
+              <form class="navbar-form navbar-left" role="search" id="search-bar">
+                <div class="form-group">
+                  <input type="text" class="form-control" placeholder="Search">
+                    <span>
+                        <button type="submit" class="btn btn-default">
+                            <img src="assets/icons/search.png">
+                        </button>
+                    </span>
+                </div>
+              </form>
+                
+              <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Settings <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#">Separated link</a></li>
+                  </ul>
+                </li>
+                <li><a href="#">Sign out</a></li>
+              </ul>
+            </div><!-- /.navbar-collapse -->
+          </div><!-- /.container-fluid -->
+        </nav>
+        
+        <div class="container-fluid">
+            <div class="profile-header">
+                <div class="container profile-header-center">
+                    <img class="profile-picture" src="assets/Luna Lovegood.png"></img>
+                    <div class="profile-name">Luna Lovegood</div>
+                </div>
+            </div>
+            <div class="profile-content">
+                <div class="profile-summary"></div>
+                <div class="container">
+                    <div class="column">
+                        <div class="col-lg-4 col-md-4 hidden-sm hidden-xs">
+                            <div class="profile-details">
+                                <p class="profile-details-header">Personal Details</p>
+                                <p class="profile-details-content" id="date-joined">Joined February 2016</p>
+                                <hr>
+                                <p class="profile-details-content" id="birthdate">Birthday: July 1996</p>
+                            </div>
+                            
+                            <div class="profile-details">
+                                <p class="profile-details-header">Friends</p>
+                                <div id="friends-list">
+                                    <img src="assets/Akali.png" class="friend-dp"></img>
+                                    <img src="assets/deadpool.jpg" class="friend-dp"></img>
+                                    <img src="assets/garfield.jpg" class="friend-dp"></img>
+                                    <img src="assets/Akali.png" class="friend-dp"></img>
+                                    <img src="assets/garfield.jpg" class="friend-dp"></img>
+                                    <img src="assets/deadpool.jpg" class="friend-dp"></img>
+
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-lg-8 col-md-8 col-sz-12 col-xs-12">
+                            <div class="center-contents" id="posts">
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            
+        </div>      
+    
+        
+        <script>
+            
+            addPost(new Post('Akali', 'assets/paint1.jpg', 'assets/Akali.png'));
+            addPost(new Post('Luna Lovegood', 'assets/luna.jpg', 'assets/Luna Lovegood.png'));
+            addPost(new Post('Akali', 'assets/paint1.jpg', 'assets/Akali.png'));
+            addPost(new Post('Doge', 'assets/dogs_playing.jpg', 'assets/doge.jpg'));
+            addPost(new Post('Garfield', 'assets/cute_cat.jpg', 'assets/garfield.jpg'));
+            addPost(new Post('Deadpool', 'assets/deadpool_model.jpg', 'assets/deadpool.jpg'));
+            addPost(new Post('Akali', 'assets/paint1.jpg', 'assets/Akali.png'));
+            addPost(new Post('Doge', 'assets/dogs_playing.jpg', 'assets/doge.jpg'));
+            addPost(new Post('Garfield', 'assets/cute_cat.jpg', 'assets/garfield.jpg'));
+            addPost(new Post('Deadpool', 'assets/deadpool_model.jpg', 'assets/deadpool.jpg'));
+            addPost(new Post('Doge', 'assets/dogs_playing.jpg', 'assets/doge.jpg'));
+            addPost(new Post('Deadpool', 'assets/deadpool_model.jpg', 'assets/deadpool.jpg'));
+            addPost(new Post('Luna Lovegood', 'assets/luna.jpg', 'assets/Luna Lovegood.png'));
+            addPost(new Post('Luna Lovegood', 'assets/luna.jpg', 'assets/Luna Lovegood.png'));
+            
+        </script>
+        
+    </body>
+</html>
+
+
+
