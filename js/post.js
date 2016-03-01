@@ -47,3 +47,5 @@ function addPost(Post) {
 
     index++;
 }
+
+

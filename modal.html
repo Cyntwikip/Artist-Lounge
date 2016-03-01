@@ -1,0 +1,123 @@
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <link rel="stylesheet" type="text/css" href="css/post-popup.css">
+      
+        <script src="js/jquery-2.2.0.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/post-popup.js"></script>
+    </head>
+    
+    <body>
+        <div class="container">
+            <!-- Trigger/Open The Modal -->
+            <button id="myBtn">Open Modal</button>
+            
+            <!-- The Modal -->
+            <div id="myModal" class="post-popup">
+                <div id="popup-content" class="container">
+                    <!-- Modal content -->
+                    <div class="modal-content">
+<!--                        <span class="close">x</span>-->
+                        <div id="popup-image-container">
+                            <img id="popup-image" src="assets/Finale.jpg"></img>
+                        </div>
+<!--                        <div class="test"></div>-->
+                        <div id="comment-section">
+                            <div id="popup-image-details">
+                                <img src="assets/Akali.png" id="popup-image-user-dp"></img>
+                                <div id="popup-image-user-name">Akali</div>
+                            </div>
+                            <div id="popup-features-container">
+                                <button id="like" class="btn btn-info features">Like</button>
+                                <button id="comment" class="btn btn-danger features">Comment</button>
+                            </div>
+<!--                            <div>-->
+                            <div id="comments">
+<!--                                fillers-->
+                                <div class="comment">
+                                    <img src="assets/doge.jpg" class="comment-dp"></img>
+                                    <p class="comment-text">doge doge! much doge so wow</p>
+                                </div>
+                                <div class="comment">
+                                    <img src="assets/deadpool.jpg" class="comment-dp"></img>
+                                    <p class="comment-text">Akali 234234 234234 2 423 423 4234234 234 2 hahahahah 2342  ddsgsdfgsdfgsdf</p>
+                                </div>
+                                <div class="comment">
+                                    <img src="assets/Finale.jpg" class="comment-dp"></img>
+                                    <p class="comment-text">whoa! cute..</p>
+                                </div>
+                                <div class="comment">
+                                    <img src="assets/garfield.jpg" class="comment-dp"></img>
+                                    <p class="comment-text">I want lasagna!</p>
+                                </div>
+                                <div class="comment">
+                                    <img src="assets/Luna%20Lovegood.png" class="comment-dp"></img>
+                                    <p class="comment-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ultrices sit amet nunc at ornare. Aenean ornare, quam ac dapibus scelerisque, turpis risus placerat justo, id tristique mauris orci a ante. Donec pharetra metus id erat facilisis posuere. </p>
+                                </div>   
+                                <div class="comment">
+                                    <img src="assets/Luna%20Lovegood.png" class="comment-dp"></img>
+                                    <p class="comment-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ultrices sit amet nunc at ornare. Aenean ornare, quam ac dapibus scelerisque, turpis risus placerat justo, id tristique mauris orci a ante. Donec pharetra metus id erat facilisis posuere. </p>
+                                </div> 
+                                <div class="comment">
+                                    <img src="assets/Luna%20Lovegood.png" class="comment-dp"></img>
+                                    <p class="comment-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ultrices sit amet nunc at ornare. Aenean ornare, quam ac dapibus scelerisque, turpis risus placerat justo, id tristique mauris orci a ante. Donec pharetra metus id erat facilisis posuere. </p>
+                                </div> 
+                    
+<!--                            </div>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+        </div>
+        
+        <script>
+            // Get the modal
+            var modal = document.getElementById('myModal');
+
+            // Get the button that opens the modal
+            var btn = document.getElementById("myBtn");
+
+            // Get the <span> element that closes the modal
+//            var span = document.getElementsByClassName("close")[0];
+            
+//            var content = document.getElementById('modal-content');
+            var content = document.getElementById('popup-content');
+//            var content = document.getElementByTag('html');
+
+            // When the user clicks on the button, open the modal 
+            btn.onclick = function() {
+                modal.style.display = "block";
+//                modal.style.display = "flex";
+            }
+
+            // When the user clicks on <span> (x), close the modal
+//            span.onclick = function() {
+//                modal.style.display = "none";
+//            }
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+                else if (event.target == content) {
+                    modal.style.display = "none";
+                }
+            }
+        </script>
+        
+    </body>
+    
+</html>
+

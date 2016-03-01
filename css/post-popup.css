@@ -1,0 +1,186 @@
+
+/* The Modal (background) */
+.post-popup {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+/*    position: absolute;*/
+/*    overflow: scroll;*/
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    /*overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.8); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+/*    position: relative;*/
+    background-color: #fefefe;
+    margin: 8% auto 5% auto; /* 15% from the top and centered */
+/*    width: 800px;*/
+/*    padding: 20px;*/
+/*    border: 1px solid #888;*/
+    border: 1px solid black;
+    /*width: 100%; /* Could be more or less, depending on screen size */ 
+    height: 85vh;
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    padding: 5px 10px;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#popup-image-container {
+/*    flex: 1;*/
+    display: inline-block;
+    position: relative;
+    width: 65%;
+/*    width: auto;*/
+    height: 100%;
+    background-color: black;
+/*    padding: auto;*/
+/*    padding: 10px;*/
+/*    text-align: center;*/
+/*    vertical-align: middle;*/
+}
+
+#popup-image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 100%;
+    max-height: 100%;
+    padding: 10px;
+}
+
+#comment-section {
+    display: inline-block;
+    float: right;
+/*    overflow: hidden;*/
+    height: 100%;
+    width: 35%;
+/*
+    width: 35%;
+    min-width: 300px;
+*/
+    background-color: rgb(223,240,250);
+/*    background-color: red;*/
+    
+}
+
+#popup-image-details {
+    display: block;
+    height: 100px;
+    padding: 10px;
+}
+
+#popup-image-user-dp{
+    display: inline-block;
+    vertical-align: center;
+    width: 80px;
+    height: 80px; 
+    background-color: darkcyan;
+    border-radius: 50%;
+    border: 1px solid rgb(29, 161, 242);
+/*    border: 2px solid rgb(230,62,98);*/
+/*    border: 1px solid hotpink;*/
+}
+
+#popup-image-user-name {
+    display: inline-block;
+    vertical-align: middle;
+/*    width: 220px;*/
+    height: 30px;
+    margin-left: 15px;
+    text-align: left;
+    font-size: 30px;
+    font-weight: bold;
+/*    color: rgb(29, 161, 242);*/
+    color: rgb(230,62,98);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+#popup-features-container {
+/*    font-size: 10px;*/
+/*    color: white;*/
+/*    height: 150px;*/
+    padding: 10px 30px;
+    margin: auto;
+/*    text-align: center;*/
+}
+
+.features {
+/*    font-size: 18px;*/
+}
+
+#comments {
+/*    display: inline-block;*/
+/*    padding: 20px 0px;*/
+    padding: 10px;
+/*    height: 700px;*/
+/*    height: inherit;*/
+/*    height: 20%;*/
+/*    height: 700px;*/
+    overflow: auto;
+    height: calc(100% - 150px);
+}
+
+.comment {
+/*
+    display: block;
+    position: relative;
+*/
+    padding: 5px 0px;
+}
+
+.comment-dp {
+    display: inline-block;
+/*    float: left;*/
+/*    vertical-align: center;*/
+    vertical-align: top;
+    width: 50px;
+    height: 50px; 
+    background-color: darkcyan;
+    border-radius: 50%;
+    border: 1px solid rgb(29, 161, 242);
+}
+
+.comment-text {
+    display: inline-block;
+    width: 65%;
+/*    float: right;*/
+    background-color: rgba(230,62,98,0.6);
+    color: white;
+/*    font-size: 15px;*/
+    overflow: hidden;
+    padding: 5px;
+    margin-left: 10px;
+    border-radius: 5px;
+/*    width: 70%;*/
+/*    word-wrap: break-word;*/
+
+}
+
+.test {
+    display: inline-block;
+    background-color: black;
+    height: 100%;
+    width: 40px;
+}

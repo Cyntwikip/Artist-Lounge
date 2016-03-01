@@ -79,3 +79,26 @@
     text-overflow: ellipsis;
 }
 
+#add-post {
+    position: fixed;
+    background-color: rgba(250,92,128,0.8);
+    border-radius: 50%;
+    color: white;
+    font-size: 80px;
+    height: 100px;
+    width: 100px;
+    bottom: 20px;
+    right: 20px;
+    text-align: center;
+/*    vertical-align: middle;*/
+}
+
+#add-post:hover {
+    background-color: rgba(230,72,108,0.8);
+}
+
+#add-post:active {
+    background-color: rgba(210,52,88,0.8);
+/*    background-color: black;*/
+}
+

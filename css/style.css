@@ -20,3 +20,17 @@ body{
 .center-contents{
     text-align: center;
 }
+
+@font-face {
+    font-family: Moon;
+    src: url(../Fonts/Moon%20Light.otf);
+}
+
+@font-face {
+    font-family: Simplifica;
+    src: url(../Fonts/Simplifica.ttf);
+}
+
+* {
+    font-family: Moon;
+}
