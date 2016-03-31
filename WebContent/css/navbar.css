@@ -1,0 +1,115 @@
+
+
+/*NAVBAR*/
+
+.navbar{
+/*    background-color: rgb(29,161,242); */
+/*    background-color: rgb(9, 141, 222);*/
+/*    background-color: rgb(230,62,98);*/
+/*    background-color: rgb(223,240,250);*/
+/*    background-color: rgb(218,228,245);*/
+/*    background-color: rgb(184,224,249);*/
+    background-color: white;
+}
+
+.navbar-header{
+    background-image: url('../Logo/logo.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 85%;
+    
+/*    width: 100%;*/
+    width: 15%;
+    text-align: center;
+    
+}
+
+/*NAVBAR BRAND*/
+.navbar-header .navbar-brand,
+.navbar-header .navbar-brand:hover,
+.navbar-header .navbar-brand:focus{
+/*    color: white;*/
+    color: rgb(230,62,98);
+}
+
+/*NAVBAR CONTENTS*/
+.navbar-default .navbar-nav > li > a {
+/*  color: rgb(29, 161, 242);*/
+/*    color: white;*/
+    color: rgb(230,62,98);
+}
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+    color: white;
+/*  background-color: rgb(9, 141, 222);*/
+/*    background-color: rgb(9, 121, 202);*/
+    background-color: rgb(230,62,98);
+}
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+    color: white;
+/*  background-color: rgb(9, 141, 222);*/
+/*    background-color: rgb(9, 121, 202);*/
+    background-color: rgb(230,62,98);
+}
+
+/*NAVBAR DROPDOWN*/
+.btn-default:active,
+.btn-default.active,
+.open > .dropdown-toggle.btn-default {
+  color: white;
+  background-color: rgb(230,62,98);
+/*    background-color: rgba(230,62,98,0.1);*/
+}
+.btn-default:active:hover,
+.btn-default.active:hover,
+.open > .dropdown-toggle.btn-default:hover,
+.btn-default:active:focus,
+.btn-default.active:focus,
+.open > .dropdown-toggle.btn-default:focus,
+.btn-default:active.focus,
+.btn-default.active.focus,
+.open > .dropdown-toggle.btn-default.focus {
+  color: white;
+/*  background-color: rgb(230,62,98);*/
+/*    background-color: rgba(230,62,98,0.1);*/
+    background-color: rgb(223,240,250);
+}
+.navbar-default .navbar-nav .open .dropdown-menu > li > a {
+    color: white;
+    background-color: rgb(230,62,98);
+}
+.navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
+.navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+/*    color: #333;*/
+    background-color: rgb(250,82,118);
+}
+.navbar-default .navbar-nav .open .dropdown-menu > .active > a,
+.navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
+.navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
+    color: white;
+    background-color: rgb(230,62,98);
+}
+/*
+.navbar-default .navbar-nav .open .dropdown-menu > .disabled > a,
+.navbar-default .navbar-nav .open .dropdown-menu > .disabled > a:hover,
+.navbar-default .navbar-nav .open .dropdown-menu > .disabled > a:focus {
+    color: white;
+    background-color: rgb(230,62,98);
+}
+*/
+
+.search-bar{
+    background-color: #f5f8fa;
+    border: 1px solid #e1e8ed;
+    border-radius: 21px;
+}
+
+#logo {
+/*    display: inline-block;*/
+/*    height: 10%;*/
+    width: 80%;
+}
+
+/*END OF NAVBAR*/
