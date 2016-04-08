@@ -27,19 +27,43 @@ public class ChallengeDAO implements ChallengeDAOInterface {
 		preparedStmt.setDate(3, challenge.getStartTime());
 		preparedStmt.setDate(4, challenge.getEndTime());
 		preparedStmt.execute();
+		preparedStmt.close();
 		con.close();		
 		}
 		catch(SQLException e)
 		{
-		return -1;				
+		return 0;				
 		}	
-		return 1;
+			
+				try
+		    	{
+				int topass=0;
+				String query = "SELECT MAX(idChallenge) FROM Challenge";
+				Connection con = JDBCMySQLConnection.getConnection();
+				PreparedStatement preparedStmt = con.prepareStatement(query);
+				
+				ResultSet temp = preparedStmt.executeQuery();
+				
+				while (temp.next()) {	
+					topass=temp.getInt("idChallenge");
+				}
+				
+				
+				preparedStmt.close();
+				con.close();
+				return topass;
+				}
+				catch(SQLException e)
+				{
+				return 0;				
+				}
+			
 			
 		//insert into challenge values(0,"","","");
 	}
 
 	@Override
-	public int updateChallenge(Challenge challenge) {
+	public boolean updateChallenge(Challenge challenge) {
 		// TODO Auto-generated method stub
 		
 
@@ -53,18 +77,21 @@ public class ChallengeDAO implements ChallengeDAOInterface {
 		preparedStmt.setDate(3, challenge.getEndTime());
 		preparedStmt.setInt(4, challenge.getId());
 		preparedStmt.execute();
-		con.close();		
+		con.close();
+		return true;
 		}
 		catch(SQLException e)
 		{
-		return -1;				
+		//return challenge.getId();	
+			return false;
 		}	
-		return 1;
+		//return false;		
+		
 		//update challenge set description="",startTime="",endTime="" where idChallenge=; 
 	}
 
 	@Override
-	public int deleteChallenge(Challenge challenge) {
+	public boolean deleteChallenge(Challenge challenge) {
 		// TODO Auto-generated method stub
 		
 		try
@@ -79,9 +106,9 @@ public class ChallengeDAO implements ChallengeDAOInterface {
 		}
 		catch(SQLException e)
 		{
-		return -1;				
+		return false;				
 		}	
-		return 1;
+		return true;
 		
 		//delete from challenge where idChallenge=;
 	}

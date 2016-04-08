@@ -2,7 +2,9 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import com.theopentutorials.jdbc.db.JDBCMySQLConnection;
 
@@ -23,10 +25,12 @@ public class FriendsListDAO implements FriendsListDAOInterface {
 			preparedStmt.setInt(2,friends.getUser2());
 			
 			preparedStmt.execute();
+			preparedStmt.close();
 			con.close();	
 		}
 		catch(SQLException e)
 		{
+			e.printStackTrace();
 			return false;
 		}
 			return true;
@@ -43,10 +47,12 @@ public class FriendsListDAO implements FriendsListDAOInterface {
 			preparedStmt.setInt(2,friends.getUser2());
 			
 			preparedStmt.execute();
+			preparedStmt.close();
 			con.close();
 		}
 		catch(SQLException e)
 		{
+			e.printStackTrace();
 			return false;
 		}
 			return true;
@@ -55,7 +61,31 @@ public class FriendsListDAO implements FriendsListDAOInterface {
 	@Override
 	public int[] getFriendsByID(int id) {
 		// TODO Auto-generated method stub
-		return null;
+		try{
+			
+			ArrayList<Integer> idlist= new ArrayList<>();
+			String query="select user2 from friendslist where user1=?";
+			Connection con = JDBCMySQLConnection.getConnection();
+			PreparedStatement preparedStmt = con.prepareStatement(query);
+			preparedStmt.setInt(1,id);	
+			
+			ResultSet temp = preparedStmt.executeQuery();
+			while (temp.next()) {
+				idlist.add(temp.getInt("user2"));
+			}
+			int[] topass=new int[idlist.size()];
+			for(int i=0; i<idlist.size();i++)
+			{
+				topass[i]=idlist.get(i);
+			}
+			preparedStmt.close();
+			con.close();
+			return topass;
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 }

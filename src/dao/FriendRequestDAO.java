@@ -30,7 +30,9 @@ public class FriendRequestDAO implements FriendRequestDAOInterface {
 			String currentTime = sdf.format(dt);
 			
 			preparedStmt.setString(4,currentTime);
+			
 			preparedStmt.execute();
+			preparedStmt.close();
 			con.close();		
 			
 		}
@@ -46,17 +48,21 @@ public class FriendRequestDAO implements FriendRequestDAOInterface {
 	public boolean updateRequest(FriendRequest request) {
 		// TODO Auto-generated method stub
 		try{
-			String query="update friendrequest set(pending=?,time=?)";
+			String query="update friendrequest set pending=ifnull(?,pending),time=ifnull(?,time) where senderid=? and receiverid=?";
 			Connection con = JDBCMySQLConnection.getConnection();
 			PreparedStatement preparedStmt = con.prepareStatement(query);
 			preparedStmt.setBoolean(1, request.isPending());
 			
 			java.util.Date dt = new java.util.Date();
-			java.text.SimpleDateFormat sdf =  new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			java.text.SimpleDateFormat sdf = 
+			     new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String currentTime = sdf.format(dt);
 			
-			preparedStmt.setString(2,	currentTime);
+			preparedStmt.setString(2,currentTime);
+			preparedStmt.setInt(3, request.getSenderID());
+			preparedStmt.setInt(4,request.getReceiverID());
 			preparedStmt.execute();
+			preparedStmt.close();
 			con.close();		
 		}
 		catch(SQLException e)
@@ -80,6 +86,7 @@ public class FriendRequestDAO implements FriendRequestDAOInterface {
 			preparedStmt.setInt(1,request.getSenderID());
 			preparedStmt.setInt(2,request.getReceiverID());
 			preparedStmt.execute();
+			preparedStmt.close();
 			con.close();		
 		}
 		catch(SQLException e)
@@ -124,6 +131,8 @@ public class FriendRequestDAO implements FriendRequestDAOInterface {
 				friendlist.add(t1);
 				
 			}
+			preparedStmt.close();
+			con.close();
 		}
 		catch(SQLException e)
 		{
@@ -168,6 +177,8 @@ public class FriendRequestDAO implements FriendRequestDAOInterface {
 				friendlist.add(t1);
 				
 			}
+			preparedStmt.close();
+			con.close();
 		}
 		catch(SQLException e)
 		{

@@ -79,7 +79,7 @@ public class CommentDAO implements CommentDAOInterface {
 		ArrayList<Date>	timelist=new ArrayList<Date>();
 		
 		try{
-			String query="Select * from comment where Account_idAccount=? order by Post_idPost ASC";
+			String query="Select * from comment where Account_idAccount=? order by idComment DESC";
 			Connection con = JDBCMySQLConnection.getConnection();
 			PreparedStatement preparedStmt = con.prepareStatement(query);
 			preparedStmt.setInt(1,accountID);
@@ -93,6 +93,7 @@ public class CommentDAO implements CommentDAOInterface {
 				post_idpostlist.add(temp.getInt("Post_idPost"));
 				comlist.add(temp.getString("comment"));
 				timelist.add(temp.getDate("time"));
+			}
 				for(int i=0;i<idcommentlist.size();i++)
 				{
 					Comment t1=new Comment();
@@ -103,11 +104,13 @@ public class CommentDAO implements CommentDAOInterface {
 					t1.setTime(timelist.get(i));
 					
 					commentlist.add(t1);
-					
+					System.out.println("count");
 				}
-			}
 				
+			
 				
+			preparedStmt.close();
+			con.close();	
 		}
 		catch(SQLException e)
 		{
@@ -132,7 +135,7 @@ public class CommentDAO implements CommentDAOInterface {
 		ArrayList<Date>	timelist=new ArrayList<Date>();
 		
 		try{
-			String query="Select * from comment where Post_idPost=? order by Account_idAccount ASC";
+			String query="Select * from comment where Post_idPost=? order by idComment DESC";
 			Connection con = JDBCMySQLConnection.getConnection();
 			PreparedStatement preparedStmt = con.prepareStatement(query);
 			preparedStmt.setInt(1,postID);
@@ -146,6 +149,7 @@ public class CommentDAO implements CommentDAOInterface {
 				post_idpostlist.add(temp.getInt("Post_idPost"));
 				comlist.add(temp.getString("comment"));
 				timelist.add(temp.getDate("time"));
+			}
 				for(int i=0;i<idcommentlist.size();i++)
 				{
 					Comment t1=new Comment();
@@ -158,8 +162,9 @@ public class CommentDAO implements CommentDAOInterface {
 					commentlist.add(t1);
 					
 				}
-			}
-				
+			
+				preparedStmt.close();
+				con.close();	
 				
 		}
 		catch(SQLException e)
