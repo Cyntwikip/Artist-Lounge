@@ -13,8 +13,39 @@
        
 	<script type="text/javascript" src="js/modernizr.custom.86080.js"></script>
 	<script src="js/bootstrap.min.js"></script>	
+<!--    <script src="js/jquery.form.js"></script>-->
+    <script src="js/jquery-2.2.0.min.js"></script>
+	
+	<style>
+		.error{
+			color: red;
+			visibility: visible;
+		}
+	</style>
+	
+	<script>
+//		function checkError(){
+//			var isError = getParameterByName("error",window.location.href);
+//			if (isError == 1)
+//				document.getElementById("errorMsg").style.visibility = "visible";	
+//			else if (isError == 2)
+//				document.getElementById("errorMsg2").style.visibility = "visible";
+//		}
+//		
+//		function getParameterByName(name, url) {
+//		    if (!url) url = window.location.href;
+//		    url = url.toLowerCase(); // This is just to avoid case sensitiveness  
+//		    name = name.replace(/[\[\]]/g, "\\$&").toLowerCase();// This is just to avoid case sensitiveness for query parameter name
+//		    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+//		        results = regex.exec(url);
+//		    if (!results) return null;
+//		    if (!results[2]) return '';
+//		    return decodeURIComponent(results[2].replace(/\+/g, " "));
+//		}
+	</script>
 	
 </head>
+<!--<body id="page" onload="checkError()">-->
 <body id="page">
 
 	<div class="main">
@@ -38,10 +69,12 @@
 				</div>
 				<div class = "login-signup-side">
 					<div class="login-section">
-						<form class="login-section-form" method="POST" action="LoginServlet">
+						<form id="login-form" class="login-section-form" method="POST" action="LoginServlet">
 							<div class="login-username-input">
-								<input id="login-username" type="text" name="username" placeholder="Username"></input><br>
-								<input id="login-password" type="password" name="password" placeholder="Password"></input>
+<!--								<div id="errorMsg" class="error">Invalid username or password!</div>-->
+                                <div id="errorMsg" class="error"></div>
+								<input required id="login-username" type="text" name="username" placeholder="Username"></input><br>
+								<input required id="login-password" type="password" name="password" placeholder="Password"></input>
 								<div class="login-submit">
 									<br>
 									<input type="submit" class="btn btn-primary" value="Login"></input>
@@ -64,13 +97,17 @@
 							<button class="show-register btn btn-default">Register</button><br><br>
 						</div>-->
                         <div class="signup-section-main">
-                            <form class="signup-section-form" method="POST" action="SignupServlet">
+                            <form id="signup-form" class="signup-section-form" method="POST" action="SignupServlet">
                                 <div class="signup-input">
-                                    <input id="signup-firstname" type="text" name="fname" placeholder="First Name"></input><br>
+<!--                                	<div id="errorMsg2" class="error">Username already exists!</div>-->
+                                    <div id="errorMsg2" class="error"></div>
+                                    <input required id="signup-firstname" type="text" name="fname" placeholder="First Name"></input><br>
+                                    <!--  
                                     <input id="signup-middlename" type="text" placeholder="Middle Name"></input><br>
-                                    <input id="signup-lastname" type="text" name="lname" placeholder="Last Name"></input><br>
-									<input id="signup-username" type="text" name="username" placeholder="New Username"></input><br>
-                                    <input id="signup-Password" type="password" name="password" placeholder="Password"></input>
+                                    -->
+                                    <input required id="signup-lastname" type="text" name="lname" placeholder="Last Name"></input><br>
+									<input required id="signup-username" type="text" name="username" placeholder="New Username"></input><br>
+                                    <input required id="signup-Password" type="password" name="password" placeholder="Password"></input>
                                 </div>
                                 <div class="signup-submit">
 									<br>
@@ -84,5 +121,30 @@
 			</div>
 		</div>
 
+    <script>
+        
+        $(document).on("submit", "#login-form", function(event) {
+            var $form = $(this);
+            $.post($form.attr("action"), $form.serialize(), function(response) {
+                if(response == '0')
+                  $("#errorMsg").text('Invalid username or password!');  
+                 //$("#errorMsg").text(response); 
+                else if(response == '1')
+                    window.location.href = "home.jsp";
+            });
+            event.preventDefault(); // Important! Prevents submitting the form.
+        });
+        $(document).on("submit", "#signup-form", function(event) {
+            var $form = $(this);
+            $.post($form.attr("action"), $form.serialize(), function(response) {
+                if(response == '0')
+                  $("#errorMsg2").text('Username already exists!');  
+                else if(response == '1')
+                    window.location.href = "home.jsp";
+            });
+            event.preventDefault(); // Important! Prevents submitting the form.
+        });
+        
+    </script>
 </body>
 </html>

@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Date;
 
 import javax.servlet.ServletException;
@@ -34,10 +35,11 @@ public class LoginServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		String username = request.getParameter("username");		
 		String password = request.getParameter("password");
+		PrintWriter out = response.getWriter();
 		
 		//for checking purposes
-		System.out.println(username);
-		System.out.println(password);
+		//System.out.println(username);
+		//System.out.println(password);
 		
 		//Date date = new Date();
 	    // display time and date using toString()
@@ -48,17 +50,22 @@ public class LoginServlet extends HttpServlet {
 		boolean success = accDAO.checkLoginDetails(username, password);
 		
 		if(success == true) {
-			System.out.println("Success");
+			System.out.println("Login Successful!");
 			
 			HttpSession session = request.getSession();
 			session.setAttribute("username", username);
 			
-			response.sendRedirect("home.jsp");
+			//response.sendRedirect("home.jsp");
+			out.print('1');
 			
 		}
-		else
-			response.sendRedirect("login.jsp");
-		
+		else {
+			//response.sendRedirect("login.jsp");
+			System.out.println("Wrong login details");
+			//out.print("Invalid username or password!");
+			//response.sendRedirect("login.jsp?error=1");
+			out.print('0');
+		}
 	}
 
 }

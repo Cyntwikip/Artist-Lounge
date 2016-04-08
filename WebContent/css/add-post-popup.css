@@ -1,0 +1,20 @@
+
+
+.add-post-modal-content {
+/*    position: relative;*/
+    background-color: #fefefe;
+    margin: 25% 20%; /* 15% from the top and centered */
+/*    width: 800px;*/
+/*    padding: 20px;*/
+/*    border: 1px solid #888;*/
+    border: 1px solid black;
+    /*width: 100%; /* Could be more or less, depending on screen size */ 
+    height: 30vh;
+    border-radius: 5px;
+}
+
+#add-post-form {
+    text-align: center;
+    padding: 40px;
+}
+

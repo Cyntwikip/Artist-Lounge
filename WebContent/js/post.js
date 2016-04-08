@@ -1,16 +1,18 @@
 
-var index = 0;
+//var index = 0;
             
-function Post(name, image, profilepic) {
+function Post(name, image, profilepic, postID) {
     this.name = name;
     this.image = image;
     this.profilepic = profilepic;
+    this.postID = postID;
 }
             
 function addPost(Post) {
     var pname = Post.name;
     var image = Post.image;
     var profilepic = Post.profilepic;
+    var index = Post.postID;
 
     var idName = 'post';
     var post = $('<div></div>');
@@ -45,7 +47,7 @@ function addPost(Post) {
 
     $(name).append(pname);
 
-    index++;
+    //index++;
 }
 
 

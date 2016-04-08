@@ -14,4 +14,5 @@ public interface AccountDAOInterface {
 	//changes
 	public boolean checkLoginDetails(String username, String password);
 	public Account getAccountByUsername(String username);
+	public boolean checkIfUsernameExists(String username);
 }

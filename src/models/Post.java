@@ -13,6 +13,7 @@ public class Post {
 	
 	public Post() {
 		super();
+		this.challengeID = -1;
 	}
 
 	public Post(String paint, boolean privacy, int accountID) {
@@ -20,6 +21,7 @@ public class Post {
 		this.paint = paint;
 		this.privacy = privacy;
 		this.accountID = accountID;
+		this.challengeID = -1;
 	}
 	
 	public int getId() {

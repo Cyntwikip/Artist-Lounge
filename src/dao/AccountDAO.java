@@ -308,4 +308,34 @@ public class AccountDAO implements AccountDAOInterface {
 		return topass;
 		
 	}
+
+	@Override
+	public boolean checkIfUsernameExists(String username) {
+		// TODO Auto-generated method stub
+		try
+    	{
+			String query = "SELECT username from account where username=?";
+			Connection con = JDBCMySQLConnection.getConnection();
+			PreparedStatement preparedStmt = con.prepareStatement(query);
+			preparedStmt.setString(1,username);
+	
+			ResultSet temp = preparedStmt.executeQuery();
+			if(!temp.next()) {
+				preparedStmt.close();
+				con.close();
+				return false;
+			}
+			else {
+				preparedStmt.close();
+				con.close();
+				return true;
+			}
+    	}
+		catch(SQLException e)
+		{
+			//System.out.println("chcklogindetails error");
+			e.printStackTrace();
+			return true;
+		}
+	}
 }

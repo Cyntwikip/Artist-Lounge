@@ -33,11 +33,15 @@
 /*    position: absolute;*/
     background-color: black;
 /*    background-image: url('/assets/dogs playing.jpg');*/
-    background-size: auto 200px;
+/*    background-size: auto 200px;*/
+/*    background-size: 100% auto;*/
+    background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
 /*    width: 340px;*/
     height: 200px;
+/*    width: 100%;*/
+/*    overflow: hidden;*/
 /*    margin-bottom: 10px;*/
     border-radius: 5px 5px 0px 0px;
 }
