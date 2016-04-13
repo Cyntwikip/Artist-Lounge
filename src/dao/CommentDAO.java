@@ -135,7 +135,7 @@ public class CommentDAO implements CommentDAOInterface {
 		ArrayList<Date>	timelist=new ArrayList<Date>();
 		
 		try{
-			String query="Select * from comment where Post_idPost=? order by idComment DESC";
+			String query="Select * from comment where Post_idPost=? order by idComment ASC";
 			Connection con = JDBCMySQLConnection.getConnection();
 			PreparedStatement preparedStmt = con.prepareStatement(query);
 			preparedStmt.setInt(1,postID);

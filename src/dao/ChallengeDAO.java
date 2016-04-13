@@ -32,7 +32,8 @@ public class ChallengeDAO implements ChallengeDAOInterface {
 		}
 		catch(SQLException e)
 		{
-		return 0;				
+			e.printStackTrace();
+			return 0;
 		}	
 			
 				try
@@ -69,7 +70,7 @@ public class ChallengeDAO implements ChallengeDAOInterface {
 
 		try
 		{
-			String query = "Update challenge set description=?,startTime=?,endTime=? where idChallenge=?";
+			String query = "Update challenge set description=ifnull(?,description),startTime=ifnull(?,startTime),endTime=ifnull(?,endTime) where idChallenge=?";
 		Connection con = JDBCMySQLConnection.getConnection();
 		PreparedStatement preparedStmt = con.prepareStatement(query);
 		preparedStmt.setString(1, challenge.getDescription() );
@@ -77,15 +78,19 @@ public class ChallengeDAO implements ChallengeDAOInterface {
 		preparedStmt.setDate(3, challenge.getEndTime());
 		preparedStmt.setInt(4, challenge.getId());
 		preparedStmt.execute();
-		con.close();
-		return true;
+		preparedStmt.close();
+		con.close();		
 		}
 		catch(SQLException e)
 		{
-		//return challenge.getId();	
+			e.printStackTrace();
 			return false;
 		}	
-		//return false;		
+		return true;
+		
+		
+		
+		
 		
 		//update challenge set description="",startTime="",endTime="" where idChallenge=; 
 	}
@@ -102,10 +107,12 @@ public class ChallengeDAO implements ChallengeDAOInterface {
 		PreparedStatement preparedStmt = con.prepareStatement(query);
 		preparedStmt.setInt(1, challenge.getId() );
 		preparedStmt.execute();
+		preparedStmt.close();
 		con.close();		
 		}
 		catch(SQLException e)
 		{
+			e.printStackTrace();
 		return false;				
 		}	
 		return true;
@@ -131,11 +138,12 @@ public class ChallengeDAO implements ChallengeDAOInterface {
 				topass.setStartTime(temp.getDate("startTime"));
 				topass.setStartTime(temp.getDate("endTime"));
 			}
+			preparedStmt.close();
 			con.close();		
 		}
 		catch(SQLException e)
 		{
-			System.out.println("ERROR ON GETCHALLENGEBYID");
+			e.printStackTrace();
 			return null;
 		}
 		return topass;

@@ -9,4 +9,5 @@ public interface LikeDAOInterface {
 	//changes
 	//public int[] getPostsByAccount(int accountID);
 	public boolean checkIfUserLikesPost(int accountID, int postID);
+	public int getNumberOfLikes(int postID);
 }

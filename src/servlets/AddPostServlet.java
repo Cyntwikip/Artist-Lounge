@@ -29,7 +29,7 @@ public class AddPostServlet extends HttpServlet {
 	
 	private boolean isMultipart;
 	private String filePath;
-	private int maxFileSize = 2000 * 1024;
+	private int maxFileSize = 5000 * 1024;
 	private int maxMemSize = 4 * 1024;
 	private File file ;
        

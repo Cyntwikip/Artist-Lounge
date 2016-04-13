@@ -18,27 +18,33 @@
         <link rel="stylesheet" type="text/css" href="css/post-popup.css">
     	<link rel="stylesheet" type="text/css" href="css/add-post-popup.css">
     	<link rel="stylesheet" type="text/css" href="css/edit-profile-popup.css">
+    	<link rel="stylesheet" type="text/css" href="css/diffprofile.css">
 
       
         <script src="js/jquery-2.2.0.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/post.js"></script>
-        <script src="js/comment.js"></script>
+    <script src="js/comment.js"></script>
         
-		<title>You</title>
+		<title></title>
 	</head>
 <body>
 
 	<% 
         String filepath = "stash/";
 		AccountDAO accDAO = new AccountDAO();
-		Account currentAcc = accDAO.getAccountByUsername((String) session.getAttribute("username"));
+		Account currentAcc = accDAO.getAccountByID(new Integer (request.getParameter("id")));
+		Account senderAcc = accDAO.getAccountByUsername((String) session.getAttribute("username"));
 		String fullname = currentAcc.getName();
         String profilePic = filepath + currentAcc.getProfilePic();
         profilePic = profilePic.replaceAll(" ", "%20");
         
-        
+        FriendRequestDAO frDAO = new FriendRequestDAO();
+        ArrayList<FriendRequest> fr = new ArrayList<FriendRequest>();
+        //ArrayList<FriendRequest> fr = frDAO.getRequestsBySenderAndReceiver(senderAcc.getId(), currentAcc.getId());
+        fr = frDAO.getRequestsBySenderAndReceiver(senderAcc.getId(), currentAcc.getId());
 	%>
+    
 
 	<nav class="navbar navbar-default navbar-fixed-top">
           <div class="container">
@@ -54,7 +60,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul class="nav navbar-nav">
                 <li><a href="home.jsp">Home</a></li>
-                <li class="active"><a href="#">Profile <span class="sr-only">(current)</span></a></li>
+                <li><a href="profile.jsp">Profile</a></li>
                 <li><a href="notifications.jsp">Notifications</a></li>
                 <li><a href="challenge.jsp">Challenge</a></li>
               </ul>
@@ -80,13 +86,18 @@
         <div class="container-fluid">
             <div class="profile-header">
                 <div class="container profile-header-center">
-                    <form method="POST" action="ChangeDPServlet" enctype="multipart/form-data">
-                        <label for="change-pic">
-                            <img class="profile-picture" src="<%=profilePic%>" /> 
-                        </label>
-                        <input id="change-pic" type="file" name="file" accept="image/*" onchange="this.form.submit();" style="display:none;" />
-                    </form>
+                    <img class="profile-picture" src="<%=profilePic%>" /> 
                     <div class="profile-name"><%=fullname%></div>
+                    <%if(fr != null && fr.size() < 1){ %>
+<div class="add-friend-area">
+	<form class="add-friend" method="POST" action="AddFriendServlet">
+		<input id="add-friend-submit" class="btn btn-primary" type="submit" value="Add as Friend">
+		<input type="hidden" name="senderID" value="<%=senderAcc.getId() %>">
+		<input type="hidden" name="receiverID" value="<%=currentAcc.getId() %>">
+		
+	</form>
+</div>  
+<% } %>  
                 </div>
             </div>
             <div class="profile-content">
@@ -99,14 +110,15 @@
                                 <p class="profile-details-content" id="date-joined">Joined February 2016</p>
                                 <hr>
                                 <!--  <p class="profile-details-content" id="birthdate">Birthday: July 1996</p>-->
-                                <a id=edit-profile>Edit information</a>
+                               
                             </div>
                             
                             <div class="profile-details">
                                 <p class="profile-details-header">Friends</p>
                                 <div id="friends-list">
 									<%
-										try {
+										try{
+											
 										FriendsListDAO flDAO = new FriendsListDAO();
 										int[] friends = flDAO.getFriendsByID(currentAcc.getId());
 										int counter = 0;
@@ -134,7 +146,8 @@
 									</div>
 									<%
 									}
-									} catch(Exception e) {}
+									
+									}catch(Exception e) {}
 									%>
 										
                                 </div>
@@ -150,40 +163,28 @@
                 </div>
             </div>
 
-             <!-- The Modal -->
+            <!-- The Modal -->
             <div id="myModal" class="post-popup">
                 <div id="popup-content" class="container">
                     <!-- Modal content -->
                     <div class="modal-content">
+<!--                        <span class="close">x</span>-->
                         <div id="popup-image-container">
-                            <div id="popup-image"></div>
+                            <img id="popup-image"></img>
                         </div>
+<!--                        <div class="test"></div>-->
                         <div id="comment-section">
-                            <div style="display:flex; flex-direction:column; max-height:100%">
-                                
-                                <div id="popup-image-details">
-                                    <img src="assets/Akali.png" id="popup-image-user-dp"></img>
-                                    <div id="popup-image-user-name">Akali</div>
-                                    <p id="post-description"></p>
-                                </div>
-                                <hr>
-                                <div id="popup-features-container">
-                                    <p id="numOfLikes" style="display:inline-block; margin-right:10px;">1</p>
-                                    <input id="like" type="button" class="btn btn-info features" onclick="likeBtn();" value="Like"/>
-                                    <button id="comment" class="btn btn-danger features" onclick="$('#comment-field').focus();">Comment</button>
-                                </div>
-                                <hr>
-                                <div id="comments">
-    <!--                                comments-->
-                                </div> 
-
-                                <form id="add-comment-form" method="POST" action="CommentServlet">
-                                    <input id="comment-field" type="text" name="comment" placeholder="Write your comment here..." style="width:100%; padding:10px" maxlength="950">
-                                    <input id="postID-comment" type="hidden" name="post-id" value=""/> 
-                                </form>
-                            
+                            <div id="popup-image-details">
+                                <img src="assets/Akali.png" id="popup-image-user-dp"></img>
+                                <div id="popup-image-user-name">Akali</div>
                             </div>
-                        
+                            <div id="popup-features-container">
+                                <button id="like" class="btn btn-info features">Like</button>
+                                <button id="comment" class="btn btn-danger features">Comment</button>
+                            </div>
+<!--                            <div>-->
+                            <div id="comments">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -218,15 +219,11 @@
             </div>
             
         </div>      
-    
-        
+ 
         <script>
         
 	        <%
-        		//String filePath = "file:///C:/Users/Jude Michael Teves/Pictures/Artist-Lounge Storage/";
-                String currentUser = (String) session.getAttribute("username");
-                //AccountDAO accDAO = new AccountDAO();
-                int userID = accDAO.getAccountByUsername(currentUser).getId();
+        		String filePath = "file:///C:/Users/Jude Michael Teves/Pictures/Artist-Lounge Storage/";
         	%>
             
         	<%
@@ -248,6 +245,7 @@
 	            		%>
 	            		addPost(new Post('<%=name%>', '<%=paint%>', '<%=dp%>', '<%=postID%>'));
 	            		<%
+	            		
 	            	}
         		} catch(Exception e) {}
         	
@@ -269,132 +267,33 @@
                 var image = $(this).find(">:first-child").css('background-image');
                 var patt=/\"|\'|\)/g;
                 image = image.split('/').pop().replace(patt,'');
+//                $('#popup-image').attr("src", "stash/"+image);
                 $('#popup-image').css('background-image', 'url(' + 'stash/' + image + ')');
                 
-                //poster's dp
-                var posterDP = $(this).find('.post-dp').attr('src');
-                $('#popup-image-user-dp').attr("src", posterDP);
-                
-                //get post id
-                var id = $(this).attr('id');
-                $('#postID-comment').attr('value', id);
-                
-                //get and set name
-                var name = $(this).find('.post-name').text();
-                $('#popup-image-user-name').html(name);
-                
-                var xhttp3 = new XMLHttpRequest();
-                xhttp3.onreadystatechange = function() {
-                    if (xhttp3.readyState == 4 && xhttp3.status == 200) {
-                        var output = xhttp3.responseText;
-                        $('#post-description').html(output);
-                    }
-                  };
-                xhttp3.open("POST", "GetDescriptionServlet", true);
-                xhttp3.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                xhttp3.send("postID="+id);
-                
-                //check like
-                var xhttp = new XMLHttpRequest();
-                xhttp.onreadystatechange = function() {
-                    if (xhttp.readyState == 4 && xhttp.status == 200) {
-                        var output = xhttp.responseText.split(" ");
-                        var suffix;
-                        //alert(output);
-                        $('#like').attr('value', output[0]);
-                        if(output[1] == 1)
-                            suffix = " like";
-                        else
-                            suffix = " likes";
-                        $('#numOfLikes').html(output[1]+suffix);
-                    }
-                  };
-                xhttp.open("POST", "CheckLikeServlet", true);
-                xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                xhttp.send("postID="+id);
-                
-                //get comments
-                var xhttp2 = new XMLHttpRequest();
-                xhttp2.onreadystatechange = function() {
-                    if (xhttp2.readyState == 4 && xhttp2.status == 200) {
-                        var output = xhttp2.responseText.split("\n");
-                        for(var i=0; i<output.length; i++) {
-                            if(/\S/.test(output[i])) {
-                                //alert(output[i]);
-                                var output2 = output[i].split(" ", 2);
-                                var text = output[i].replace(output2[0]+" "+output2[1]+" ", "");
-                                addComment(new Comment(output2[0], text, output2[1]));
-                            }
-                        }
-                    }
-                  };
-                xhttp2.open("POST", "GetCommentsServlet", true);
-                xhttp2.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                xhttp2.send("postID="+id);
-                
+                addComment(new Comment('assets/Finale.jpg', 'Whoa! cute!', 0));
+                addComment(new Comment('assets/Luna%20Lovegood.png', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ultrices sit amet nunc at ornare. Aenean ornare, quam ac dapibus scelerisque, turpis risus placerat justo, id tristique mauris orci a ante. Donec pharetra metus id erat facilisis posuere.', 1));
+                addComment(new Comment('assets/Finale.jpg', 'Whoa! cute!', 2));
+                addComment(new Comment('assets/Finale.jpg', 'Whoa! cute!', 3));
+                addComment(new Comment('assets/Finale.jpg', 'Whoa! cute!', 4));
             });
+
+            // When the user clicks on the button, open the modal 
+//            $(".post").click(function() {
+//                modal.style.display = "block";
+//                var image = $(this).find(">:first-child").css('background-image');
+//                var patt=/\"|\'|\)/g;
+//                image = image.split('/').pop().replace(patt,'');
+//                $('#popup-image').attr("src", "stash/"+image);
+//            });
 
             // When the user clicks anywhere outside of the modal, close it
             window.onclick = function(event) {
                 if (event.target == modal) {
                     modal.style.display = "none";
-                    emptyCommentSection();
-                    $('#comment-field').val('');
                 }
                 else if (event.target == content) {
                     modal.style.display = "none";
-                    emptyCommentSection();
-                    $('#comment-field').val('');
                 }
-            }
-            
-            function closeAddPost() {
-                addpost.style.display = "none";
-            }
-            
-            $(document).on("submit", "#add-comment-form", function(event) {
-                var $form = $(this);
-                $.post($form.attr("action"), $form.serialize(), function(response) {
-                    $('#comments').empty();
-                    $('#comment-field').val('');
-                    var output = response.split("\n");
-                    for(var i=0; i<output.length; i++) {
-                        if(/\S/.test(output[i])) {
-                            var output2 = output[i].split(" ", 2);
-                            var text = output[i].replace(output2[0]+" "+output2[1]+" ", "");
-                            addComment(new Comment(output2[0], text, output2[1]));
-                        }
-                    }
-                });
-                event.preventDefault(); // Important! Prevents submitting the form.
-            });        
-                    
-            function likeBtn() {
-                var likeVal = $('#like').attr('value');
-                var id = $('#postID-comment').attr('value');
-                
-                var xhttp = new XMLHttpRequest();
-                xhttp.onreadystatechange = function() {
-                    if (xhttp.readyState == 4 && xhttp.status == 200) {   
-                        var output = xhttp.responseText;
-                        //alert(output);
-                        var suffix;
-                        if(output == 1)
-                            suffix = " like";
-                        else
-                            suffix = " likes";
-                        $('#numOfLikes').html(output+suffix);
-                    }
-                  };
-                xhttp.open("POST", "LikeServlet", true);
-                xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                xhttp.send("like="+likeVal+"&postID="+id);
-                
-                if(likeVal == "Like")
-                    $('#like').attr('value', "Unlike");
-                else
-                    $('#like').attr('value', "Like");
-                
             }
             
             function closeEditProfile() {

@@ -89,15 +89,17 @@
 
 #popup-image-details {
     display: block;
-    height: 100px;
+/*    height: 100px;*/
     padding: 10px;
+    margin-bottom: 10px;
 }
 
 #popup-image-user-dp{
     display: inline-block;
-    vertical-align: center;
-    width: 80px;
-    height: 80px; 
+/*    vertical-align: center;*/
+/*    width: 80px;*/
+/*    height: 80px; */
+    width: 20%;
     background-color: darkcyan;
     border-radius: 50%;
     border: 1px solid rgb(29, 161, 242);
@@ -109,7 +111,7 @@
     display: inline-block;
     vertical-align: middle;
 /*    width: 220px;*/
-    height: 35px;
+/*    height: 35px;*/
     margin-left: 15px;
     text-align: left;
     font-size: 30px;
@@ -121,12 +123,28 @@
     text-overflow: ellipsis;
 }
 
+#post-description {
+    display: block;
+/*    padding: 2% auto;*/
+    padding-left: 20%;
+    padding-right: 0%;
+    
+    color: rgb(230,62,98);
+    max-height: 100px;
+    overflow-y: auto;
+}
+
 #popup-features-container {
 /*    font-size: 10px;*/
 /*    color: white;*/
 /*    height: 150px;*/
-    padding: 10px 30px;
-    margin: auto;
+/*    padding: 10px 30px;*/
+/*    height: 60px;*/
+/*    margin: auto;*/
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
 /*    text-align: center;*/
 }
 
@@ -137,13 +155,15 @@
 #comments {
 /*    display: inline-block;*/
 /*    padding: 20px 0px;*/
-    padding: 10px;
+    padding: 20px 10px 10px 10px;
+/*    top right bottom left*/
 /*    height: 700px;*/
 /*    height: inherit;*/
 /*    height: 20%;*/
 /*    height: 700px;*/
     overflow: auto;
-    height: calc(100% - 150px);
+/*    height: calc(100% - 150px);*/
+    flex: 1;
 }
 
 .comment {
@@ -151,6 +171,7 @@
     display: block;
     position: relative;
 */
+    display: block;
     padding: 5px 0px;
 }
 
@@ -159,8 +180,8 @@
 /*    float: left;*/
 /*    vertical-align: center;*/
     vertical-align: top;
-    width: 50px;
-    height: 50px; 
+    width: 15%;
+    height: auto; 
     background-color: darkcyan;
     border-radius: 50%;
     border: 1px solid rgb(29, 161, 242);
@@ -168,7 +189,7 @@
 
 .comment-text {
     display: inline-block;
-    width: 70%;
+    max-width: 80%;
 /*    float: right;*/
     background-color: rgba(230,62,98,0.6);
     color: white;

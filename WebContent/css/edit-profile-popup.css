@@ -1,6 +1,6 @@
 
 
-.add-post-modal-content {
+.edit-profile-modal-content {
 /*    position: relative;*/
     background-color: #fefefe;
     margin: 25% 20%; /* 15% from the top and centered */
@@ -9,13 +9,15 @@
 /*    border: 1px solid #888;*/
     border: 1px solid black;
     /*width: 100%; /* Could be more or less, depending on screen size */ 
-/*    height: 30vh;*/
+    height: 30vh;
     border-radius: 5px;
 }
 
-#add-post-form {
-/*    display: block;*/
-/*    width: 100%;*/
+#edit-profile-form {
+    text-align: center;
+    padding: 40px;
+}
+#edit-profile-form-pw {
     text-align: center;
     padding: 40px;
 }

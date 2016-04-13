@@ -188,5 +188,101 @@ public class FriendRequestDAO implements FriendRequestDAOInterface {
 
 		return friendlist;
 	}
+	
+	//added by CJ
+	
+	@Override
+	public ArrayList<FriendRequest> getRequestsBySenderAndReceiver(int senderID, int receiverID) {
+		// TODO Auto-generated method stub
+		ArrayList<FriendRequest> friendlist=new ArrayList<FriendRequest>();
+		ArrayList<Integer> senderidlist=new ArrayList<>();
+		ArrayList<Integer> receiverid=new ArrayList<>();
+		ArrayList<Boolean> pendinglist=new ArrayList<Boolean>();
+		ArrayList<Date> timelist=new ArrayList<Date>();
+		try{
+			String query="select * from friendrequest where senderid=? and receiverid=? and pending=0 order by `time` ASC";
+			Connection con = JDBCMySQLConnection.getConnection();
+			PreparedStatement preparedStmt = con.prepareStatement(query);
+			preparedStmt.setInt(1,senderID);
+			preparedStmt.setInt(2, receiverID);
+			
+			ResultSet temp = preparedStmt.executeQuery();
+
+			while (temp.next()) {
+				senderidlist.add(temp.getInt("senderid"));
+				receiverid.add(temp.getInt("receiverid"));
+				pendinglist.add(temp.getBoolean("pending"));
+				timelist.add(temp.getDate("time"));
+			}
+			for(int i=0;i<senderidlist.size();i++)
+			{
+				FriendRequest t1=new FriendRequest();
+				t1.setSenderID(senderidlist.get(i));
+				t1.setReceiverID(receiverid.get(i));
+				t1.setPending(pendinglist.get(i));
+				t1.setTime(timelist.get(i));
+				
+				friendlist.add(t1);
+				
+			}
+			preparedStmt.close();
+			con.close();
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+			System.out.println("error on getrequest by sender");
+			return null;
+		}
+
+		return friendlist;
+		//select * from friendrequest where senderID=? order by receiverid ASC;
+	}
+
+	@Override
+	public ArrayList<FriendRequest> getRequestsByReceiver(int receiverID, int pending) {
+		// TODO Auto-generated method stub
+		ArrayList<FriendRequest> friendlist=new ArrayList<FriendRequest>();
+		ArrayList<Integer> senderidlist=new ArrayList<>();
+		ArrayList<Integer> receiverid=new ArrayList<>();
+		ArrayList<Boolean> pendinglist=new ArrayList<Boolean>();
+		ArrayList<Date> timelist=new ArrayList<Date>();
+		try{
+			String query="select * from friendrequest where receiverid=? and pending=? order by senderid ASC";
+			Connection con = JDBCMySQLConnection.getConnection();
+			PreparedStatement preparedStmt = con.prepareStatement(query);
+			preparedStmt.setInt(1,receiverID);
+			preparedStmt.setInt(2,pending);
+			
+			ResultSet temp = preparedStmt.executeQuery();
+
+			while (temp.next()) {
+				senderidlist.add(temp.getInt("senderid"));
+				receiverid.add(temp.getInt("receiverid"));
+				pendinglist.add(temp.getBoolean("pending"));
+				timelist.add(temp.getDate("time"));
+			}
+			for(int i=0;i<senderidlist.size();i++)
+			{
+				FriendRequest t1=new FriendRequest();
+				t1.setSenderID(senderidlist.get(i));
+				t1.setReceiverID(receiverid.get(i));
+				t1.setPending(pendinglist.get(i));
+				t1.setTime(timelist.get(i));
+				
+				friendlist.add(t1);
+				
+			}
+			preparedStmt.close();
+			con.close();
+		}
+		catch(SQLException e)
+		{
+			System.out.println("error on getrequest by sender");
+			return null;
+		}
+
+		return friendlist;
+	}
 
 }

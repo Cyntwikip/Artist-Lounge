@@ -90,4 +90,27 @@ public class LikeDAO implements LikeDAOInterface {
 			return false;
 		}
 	}
+	
+	@Override
+	public int getNumberOfLikes(int postID){
+		try{
+			String query="select count(*) from liketable where Post_idPost=?";
+			Connection con = JDBCMySQLConnection.getConnection();
+			PreparedStatement preparedStmt = con.prepareStatement(query);
+			preparedStmt.setInt(1,postID);	
+			ResultSet temp = preparedStmt.executeQuery();
+			int count=0;
+			if(temp.next())
+				count = temp.getInt(1);
+			preparedStmt.close();
+			con.close();
+			return count;
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+			return 0;
+		}
+	}
+	
 }

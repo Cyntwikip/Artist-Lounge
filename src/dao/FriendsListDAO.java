@@ -64,7 +64,7 @@ public class FriendsListDAO implements FriendsListDAOInterface {
 		try{
 			
 			ArrayList<Integer> idlist= new ArrayList<>();
-			String query="select user2 from friendslist where user1=?";
+			String query="select user2 from friendslist where user1=? union select user1 from friendslist where user2=?";
 			Connection con = JDBCMySQLConnection.getConnection();
 			PreparedStatement preparedStmt = con.prepareStatement(query);
 			preparedStmt.setInt(1,id);	

@@ -55,7 +55,7 @@
 }
 
 hr{
-/*    margin: 10px;*/
+    margin: 10px;
 /*    color: rgba(9,141,222,1);*/
 }
 
@@ -108,6 +108,3 @@ hr{
     
 }
 
-.moreFriends {
-	display: none;
-}

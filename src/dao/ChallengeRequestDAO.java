@@ -21,7 +21,7 @@ public class ChallengeRequestDAO implements ChallengeRequestDAOInterface {
 		// TODO Auto-generated method stub
 		try
 		{
-		String query = " insert into challengerequest values(?,?,?,?)";
+		String query = " insert into challengerequest (senderid,receiverid,pending,time) values(?,?,?,?)";
 	
 		Connection con = JDBCMySQLConnection.getConnection();
 		PreparedStatement preparedStmt = con.prepareStatement(query);
@@ -30,10 +30,12 @@ public class ChallengeRequestDAO implements ChallengeRequestDAOInterface {
 		preparedStmt.setBoolean(3,request.isPending());
 		preparedStmt.setDate(4,request.getTime());
 		preparedStmt.execute();
-		con.close();		
+		preparedStmt.close();
+		con.close();	
 		}
 		catch(SQLException e)
 		{
+		e.printStackTrace();
 		return false;				
 		}	
 		return true;
@@ -48,7 +50,7 @@ public class ChallengeRequestDAO implements ChallengeRequestDAOInterface {
 		// TODO Auto-generated method stub
 		try
 		{
-		String query = " update challengerequest set pending=?,time=? where senderid=?,receiverid=?";
+		String query = " update challengerequest set pending=ifnull(?,pending),time=ifnull(?,time) where senderid=? and receiverid=?";
 		
 
 		Connection con = JDBCMySQLConnection.getConnection();
@@ -61,10 +63,12 @@ public class ChallengeRequestDAO implements ChallengeRequestDAOInterface {
 		preparedStmt.setInt(4,request.getReceiverID());
 		
 		preparedStmt.execute();
+		preparedStmt.close();
 		con.close();		
 		}
 		catch(SQLException e)
 		{
+		e.printStackTrace();
 		return false;				
 		}	
 		return true;
@@ -76,7 +80,7 @@ public class ChallengeRequestDAO implements ChallengeRequestDAOInterface {
 		// TODO Auto-generated method stub
 		try
 		{
-		String query = " delete from challengerequest where senderid=?,receiverid=?";
+		String query = " delete from challengerequest where senderid=? and receiverid=?";
 		
 
 		Connection con = JDBCMySQLConnection.getConnection();
@@ -85,10 +89,12 @@ public class ChallengeRequestDAO implements ChallengeRequestDAOInterface {
 		preparedStmt.setInt(2,request.getReceiverID());
 		
 		preparedStmt.execute();
+		preparedStmt.close();
 		con.close();		
 		}
 		catch(SQLException e)
 		{
+		e.printStackTrace();
 		return false;				
 		}	
 		return true;
@@ -130,11 +136,12 @@ public class ChallengeRequestDAO implements ChallengeRequestDAOInterface {
 			t1.setTime(timelist.get(i));
 			challengelist.add(t1);
 			}
-		
+			preparedStmt.close();
+			con.close();
 		}
 		catch(SQLException e)
 		{
-			System.out.println("getrequestbysender error");
+			e.printStackTrace();
 			return null;
 		}
 		return challengelist;
@@ -174,11 +181,105 @@ public class ChallengeRequestDAO implements ChallengeRequestDAOInterface {
 			t1.setTime(timelist.get(i));
 			challengelist.add(t1);
 			}
-		
+			preparedStmt.close();
+			con.close();
 		}
 		catch(SQLException e)
 		{
-			System.out.println("getrequestbyreceiver error");
+			e.printStackTrace();
+			return null;
+			
+		}
+		return challengelist;
+	}
+	
+	//added by CJ
+	@Override
+	public ArrayList<ChallengeRequest> getRequestsBySenderAndReceiver(int senderID, int receiverID) {
+		// TODO Auto-generated method stub
+		ArrayList<ChallengeRequest> challengelist= new ArrayList<ChallengeRequest>();
+		ArrayList<Integer> senderidlist=new ArrayList<>();
+		ArrayList<Integer> receiveridlist=new ArrayList<>();
+		ArrayList<Boolean> pendinglist=new ArrayList<Boolean>();
+		ArrayList<Date> timelist=new ArrayList<Date>();
+		
+		try
+		{
+		String query = "select * from challengerequest where senderid=? and receiverid=? order by `time` ASC";
+		Connection con = JDBCMySQLConnection.getConnection();
+		PreparedStatement preparedStmt = con.prepareStatement(query);
+		preparedStmt.setInt(1,senderID);
+		preparedStmt.setInt(2,receiverID);
+		ResultSet temp = preparedStmt.executeQuery();
+			
+			while (temp.next()) {
+			senderidlist.add(temp.getInt("senderid"));
+			receiveridlist.add(temp.getInt("receiverid"));
+			pendinglist.add(temp.getBoolean("pending"));
+			timelist.add(temp.getDate("time"));
+			}
+			for(int i=0;i<senderidlist.size();i++)
+			{
+			ChallengeRequest t1=new ChallengeRequest();
+			t1.setSenderID(senderidlist.get(i));
+			t1.setReceiverID(receiveridlist.get(i));
+			t1.setPending(pendinglist.get(i));
+			t1.setTime(timelist.get(i));
+			challengelist.add(t1);
+			}
+			preparedStmt.close();
+			con.close();
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+			return null;
+		}
+		return challengelist;
+		//select * from challengerequest where senderid= order by (receiverid) ASC;
+	}
+
+	@Override
+	public ArrayList<ChallengeRequest> getRequestsByReceiver(int receiverID, int pending) {
+		// TODO Auto-generated method stub
+		
+		
+		ArrayList<ChallengeRequest> challengelist= new ArrayList<ChallengeRequest>();
+		ArrayList<Integer> senderidlist=new ArrayList<>();
+		ArrayList<Integer> receiveridlist=new ArrayList<>();
+		ArrayList<Boolean> pendinglist=new ArrayList<Boolean>();
+		ArrayList<Date> timelist=new ArrayList<Date>();
+		
+		try
+		{
+		String query = "select * from challengerequest where receiverid=? and pending=? order by (senderid) ASC";
+		Connection con = JDBCMySQLConnection.getConnection();
+		PreparedStatement preparedStmt = con.prepareStatement(query);
+		preparedStmt.setInt(1,receiverID);	
+		preparedStmt.setInt(2,pending);
+		ResultSet temp = preparedStmt.executeQuery();
+			
+			while (temp.next()) {
+			senderidlist.add(temp.getInt("senderid"));
+			receiveridlist.add(temp.getInt("receiverid"));
+			pendinglist.add(temp.getBoolean("pending"));
+			timelist.add(temp.getDate("time"));
+			}
+			for(int i=0;i<senderidlist.size();i++)
+			{
+			ChallengeRequest t1=new ChallengeRequest();
+			t1.setSenderID(senderidlist.get(i));
+			t1.setReceiverID(receiveridlist.get(i));
+			t1.setPending(pendinglist.get(i));
+			t1.setTime(timelist.get(i));
+			challengelist.add(t1);
+			}
+			preparedStmt.close();
+			con.close();
+		}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
 			return null;
 			
 		}

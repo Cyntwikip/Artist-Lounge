@@ -34,3 +34,11 @@ body{
 * {
     font-family: OpenSans;
 }
+
+hr{
+    margin: 0;
+    width: 95%;
+    margin: auto;
+    background-color: rgb(71,172,202);
+    padding-top: 1px;
+}

@@ -10,4 +10,8 @@ public interface FriendRequestDAOInterface {
 	public boolean deleteRequest(FriendRequest request);
 	public ArrayList<FriendRequest> getRequestsBySender(int senderID);
 	public ArrayList<FriendRequest> getRequestsByReceiver(int receiverID);
+	
+	//added by CJ
+	public ArrayList<FriendRequest> getRequestsBySenderAndReceiver(int senderID, int receiverID);
+	public ArrayList<FriendRequest> getRequestsByReceiver(int receiverID, int pending);
 }
