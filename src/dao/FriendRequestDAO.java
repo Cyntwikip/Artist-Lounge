@@ -80,11 +80,13 @@ public class FriendRequestDAO implements FriendRequestDAOInterface {
 	public boolean deleteRequest(FriendRequest request) {
 		// TODO Auto-generated method stub
 		try{
-			String query="delete from friendrequest where senderid=? and receiverid=?";
+			String query="delete from friendrequest where (senderid=? and receiverid=?) OR (senderid=? and receiverid=?)";
 			Connection con = JDBCMySQLConnection.getConnection();
 			PreparedStatement preparedStmt = con.prepareStatement(query);
 			preparedStmt.setInt(1,request.getSenderID());
 			preparedStmt.setInt(2,request.getReceiverID());
+			preparedStmt.setInt(3,request.getReceiverID());
+			preparedStmt.setInt(4,request.getSenderID());
 			preparedStmt.execute();
 			preparedStmt.close();
 			con.close();		
@@ -283,6 +285,96 @@ public class FriendRequestDAO implements FriendRequestDAOInterface {
 		}
 
 		return friendlist;
+	}
+
+	@Override
+	public boolean checkIfRequestSent(int senderID, int receiverID) {
+		
+		try
+    	{
+			String query = "SELECT COUNT(*) from friendrequest where (senderid=? and receiverid=?)";
+			Connection con = JDBCMySQLConnection.getConnection();
+			PreparedStatement preparedStmt = con.prepareStatement(query);
+			preparedStmt.setInt(1,senderID);
+			preparedStmt.setInt(2,receiverID);
+	
+			ResultSet temp = preparedStmt.executeQuery();
+			int count=0;
+			if(temp.next())
+				count = temp.getInt(1);
+			preparedStmt.close();
+			con.close();
+			
+			System.out.println("Request Sent: "+count);
+			
+			if(count >= 1)
+				return true;
+			else
+				return false;
+    	}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	@Override
+	public boolean checkIfRequestIsAccepted(int senderID, int receiverID) {
+		try
+    	{
+			String query = "SELECT pending from friendrequest where senderid=? and receiverid=?";
+			Connection con = JDBCMySQLConnection.getConnection();
+			PreparedStatement preparedStmt = con.prepareStatement(query);
+			preparedStmt.setInt(1,senderID);
+			preparedStmt.setInt(2,receiverID);
+	
+			ResultSet temp = preparedStmt.executeQuery();
+			boolean pending = true;
+			if(temp.next())
+				pending = temp.getBoolean(1);
+			preparedStmt.close();
+			con.close();
+			System.out.println("Request Accepted: " + pending);
+			
+			return pending;
+    	}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	@Override
+	public boolean checkIfUserSentRequest(int senderID, int receiverID) {
+		try
+    	{
+			String query = "SELECT COUNT(*) from friendrequest where (senderid=? and receiverid=?)";
+			Connection con = JDBCMySQLConnection.getConnection();
+			PreparedStatement preparedStmt = con.prepareStatement(query);
+			preparedStmt.setInt(1,receiverID);
+			preparedStmt.setInt(2,senderID);
+	
+			ResultSet temp = preparedStmt.executeQuery();
+			int count=0;
+			if(temp.next())
+				count = temp.getInt(1);
+			preparedStmt.close();
+			con.close();
+			
+			System.out.println("Request Sent: "+count);
+			
+			if(count >= 1)
+				return true;
+			else
+				return false;
+    	}
+		catch(SQLException e)
+		{
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 }

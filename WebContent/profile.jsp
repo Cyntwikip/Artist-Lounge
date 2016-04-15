@@ -117,24 +117,32 @@
 											
 											String fprofilePic = filepath + friend.getProfilePic();
 											counter++;
-									%><a href="diffprofile.jsp?id=<%=friend.getId()%>"><img src="<%=fprofilePic%>" class="friend-dp"></img></a><%
+									%>
+									<a href="diffprofile.jsp?id=<%=friend.getId()%>"><img src="<%=fprofilePic%>" class="friend-dp"></img></a>
+									<%
 										}
-									if(friends.length > 6){
-									%><br><a href="javascript:showHideMoreFriends()" id="showMore">See More Friends</a>
+										
+										if(friends.length > 6){
+									%>
+									<br><a href="javascript:showHideMoreFriends()" id="showMore">See More Friends</a>
 									<div class="moreFriends">
+									
 									<%
 										for (int j = 6; j < friends.length; j++){
 											AccountDAO accDAO2 = new AccountDAO();
 											Account friend = accDAO2.getAccountByID(friends[j]);
 											
 											String fprofilePic = filepath + friend.getProfilePic();
-											%><a href="diffprofile.jsp?id=<%=friend.getId()%>"><img src="<%=fprofilePic%>" class="friend-dp"></img></a><%
+									%>
+									<a href="diffprofile.jsp?id=<%=friend.getId()%>"><img src="<%=fprofilePic%>" class="friend-dp"></img></a>
+									<%
 										}
 									%>
 									</div>
 									<%
-									}
-									} catch(Exception e) {}
+										}
+
+										} catch(Exception e) {}
 									%>
 										
                                 </div>
@@ -233,7 +241,8 @@
         		try {
 	        		PostDAO postDAO = new PostDAO();
 	            	ArrayList<Post> posts = new ArrayList<Post>();
-	            	posts = postDAO.getRecentPosts(12);
+                    
+	            	posts = postDAO.getPostsByAccount(currentAcc.getId());
 	            	
 	            	for(int i=0; i<posts.size(); i++) {
 	            		Post post = posts.get(i);

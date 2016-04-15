@@ -69,7 +69,7 @@
                 </li>
 -->
                   
-                <li><a href="login.html">Sign out</a></li>
+                <li><a href="login.jsp">Sign out</a></li>
               </ul>
             </div><!-- /.navbar-collapse -->
           </div><!-- /.container-fluid -->
@@ -100,7 +100,9 @@
 					String dp = sender.getProfilePic();
             		dp = "stash/" + dp.replaceAll(" ", "%20");
 					
-				%>addNotif(new Notification('<%=sender.getName() %>', '1', '<%=dp %>', '<%=sender.getId() %>', '<%=currentAcc.getId()%>'));<%
+			%>
+				addNotif(new Notification('<%=sender.getName() %>', '1', '<%=dp %>', '<%=sender.getId() %>', '<%=currentAcc.getId()%>'));
+			<%
 				}
 				
 				for(ChallengeRequest c:cr){
@@ -108,17 +110,14 @@
 					String dp = sender.getProfilePic();
             		dp = "stash/" + dp.replaceAll(" ", "%20");
 					
-				%>addNotif(new Notification('<%=sender.getName() %>', '2', '<%=dp %>', '<%=sender.getId() %>', '<%=currentAcc.getId()%>'));<%
+			%>
+				addNotif(new Notification('<%=sender.getName() %>', '2', '<%=dp %>', '<%=sender.getId() %>', '<%=currentAcc.getId()%>'));
+			<%
 				}
 				
 			} catch (Exception e){}
 		%>
 		
-		
-			//addNotif(new Notification('Akali', '1', 'assets/Akali.png', senderid));
-			//addNotif(new Notification('Garfield', '2', 'assets/Garfield.jpg'));
-			//addNotif(new Notification('Doge', '1', 'assets/doge.jpg'));
-			//addNotif(new Notification('Deadpool', '2', 'assets/deadpool.jpg'));
 		</script>
 </body>
 </html>

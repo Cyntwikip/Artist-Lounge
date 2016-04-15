@@ -1,6 +1,6 @@
 
 .wholearea{
-    margin-top: 60px;
+    margin-top: 60xp;
 }
 .challengescreen{
 
@@ -26,6 +26,21 @@
 		width: 100px;
 		height: 100px;
 }
+.eraser{
+	width: 100x;
+	height:100px;
+	
+}
+.pen{
+	width: 100x;
+	height:100px;
+	
+}
+.save{
+	width: 100x;
+	height:100px;
+	
+}
 
 .challengebox{
 	/*float:both;*/
@@ -43,6 +58,7 @@
 }
 
 .h1class{
+		margin-top: 60px;
 		height:100%;
 		background-color: rgb(223,240,250);
 }
@@ -54,12 +70,36 @@
 		
 }
 
-.paintbox{
+
+#canvas{
+		
 		background-color: white;
-		height: 500px;
-		width:100%;
-		margin: 20px;
-		border-radius: 5px;
-        margin-bottom: 40px;
+		margin: 0px;
+		border-radius: 0px;
+        margin-bottom: 0px;
 }
+
+
+#clockdiv{
+    font-family: sans-serif;
+    color: #000000;
+    display: inline-block;
+    font-weight: 100;
+    text-align: center;
+    font-size: 30px;
+    float:left;
+}
+
+#clockdiv > div{
+    
+    border-radius: 3px;
+    display: inline-block;
+}
+
+#clockdiv div > span{
+    
+    border-radius: 3px;
+    display: inline-block;
+}
+
 

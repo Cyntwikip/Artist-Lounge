@@ -36,10 +36,10 @@
             </div>
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul class="nav navbar-nav">
-                <li><a href="home.html">Home <span class="sr-only">(current)</span></a></li>
-                <li><a href="profile.html">Profile</a></li>
-                <li><a href="notifications.html">Notifications</a></li>
-                <li class="active"><a href="challenge.html">Challenge</a></li>
+                <li><a href="home.jsp">Home <span class="sr-only">(current)</span></a></li>
+                <li><a href="profile.jsp">Profile</a></li>
+                <li><a href="notifications.jsp">Notifications</a></li>
+                <li class="active"><a href="challenge.jsp">Challenge</a></li>
               </ul>
 			  
 		<form class="navbar-form navbar-left" role="search" id="search-bar">
@@ -76,9 +76,31 @@
 		   <div class="container wholearea">
 		  <div class="challengescreen">
 		    <div class="h1class">
-					<p id="timetext"> Time Remaining: 6 hours</p>
+							
 		    </div>
+		
 		    <div class="challengebox">
+		    			<div id="clockdiv">
+					  <div>
+					    <span class="days"></span>
+					    <div class="smalltext">Days</div>
+					  </div>
+					  <div>
+					    <span class="hours"></span>
+					    <div class="smalltext">Hours</div>
+					  </div>
+					  <div>
+					    <span class="minutes"></span>
+					    <div class="smalltext">Minutes</div>
+					  </div>
+					  <div>
+					    <span class="seconds"></span>
+					    <div class="smalltext">Seconds</div>
+					  </div>
+					</div>			
+		        <script src="timer.js"></script>
+		    
+		    
 <!--					<div class="challengepictureout">-->
 								<img class="battlepicture1" src="assets/Luna Lovegood.png"></img>
 								<!--<span>-->
@@ -86,10 +108,19 @@
 								<img class="battlepicture1" src="assets/Akali.png" ></img>
 <!--					</div>-->
 			</div>
-			<canvas id="paintbox" width=1000 height=1000></canvas>
-				
+			<div id="canvasdiv">
+			
+			
+			
+			</div>
 			
 		</div>
+		<div id="tools">
+		<input type="image" id="eraser" class="eraser" src="assets/icons/eraser.png">
+		<input type="image" id="pen" class="pen" src="assets/icons/pen.ico">
+		<input type="image" id="save" class="save" src="assets/icons/save.png">
+		</div>
+		<script src="paintScript.js"></script>
 		</div>
 	</body>
 </html>

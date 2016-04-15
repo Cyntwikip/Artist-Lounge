@@ -48,14 +48,16 @@
                 <li><a href="challenge.jsp">Challenge</a></li>
               </ul>
                 
-              <form class="navbar-form navbar-left" role="search" id="search-bar">
+              <form class="navbar-form navbar-left" role="search" id="search-bar" method="POST" action="SearchPostServlet">
                 <div class="form-group">
-                  <input type="text" class="form-control" placeholder="Search">
+                  <input id="search" name="search" type="text" class="form-control" placeholder="Search"/>
+<!--
                     <span>
                         <button type="submit" class="btn btn-default">
                             <img src="assets/icons/search.png">
                         </button>
                     </span>
+-->
                 </div>
               </form>
                 
@@ -84,7 +86,12 @@
                             <div style="display:flex; flex-direction:column; max-height:100%">
                                 
                                 <div id="popup-image-details">
-                                    <img src="assets/Akali.png" id="popup-image-user-dp"></img>
+<!--                                    <a id="linkToProfile">-->
+                                        <form id="linkToProfile" method="POST" action="ProfileServlet">
+                                            <input type="image" src="assets/Akali.png" id="popup-image-user-dp" alt="Submit Form"></input>
+                                            <input id="linkProfilePostID" type="hidden" name="postID" value=""/>
+                                        </form>
+<!--                                    </a>-->
                                     <div id="popup-image-user-name">Akali</div>
                                     <p id="post-description"></p>
                                 </div>
@@ -213,6 +220,8 @@
                 //get post id
                 var id = $(this).attr('id');
                 $('#postID-comment').attr('value', id);
+                $('#linkProfilePostID').attr('value', id);
+                
                 
                 //get and set name
                 var name = $(this).find('.post-name').text();
@@ -350,6 +359,23 @@
                     $('#like').attr('value', "Like");
                 
             }
+                    
+            $(document).on("submit", "#search-bar", function(event) {
+                var $form = $(this);
+                $.post($form.attr("action"), $form.serialize(), function(response) {
+                    $('#posts').empty();
+                    var output = response.split("\n");
+                        for(var i=0; i<output.length; i++) {
+                            if(/\S/.test(output[i])) {
+                                var output2 = output[i].split(" ", 3);
+                                var name = output[i].replace(output2[0]+" "+output2[1]+" "+output2[2]+" ", "");
+                                addPost(new Post(name, output2[0], output2[1], output2[2]));
+                            }
+                        }
+                });
+                event.preventDefault(); // Important! Prevents submitting the form.
+            }); 
+                    
                     
         </script>
         

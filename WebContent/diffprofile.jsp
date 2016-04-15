@@ -35,6 +35,7 @@
 		AccountDAO accDAO = new AccountDAO();
 		Account currentAcc = accDAO.getAccountByID(new Integer (request.getParameter("id")));
 		Account senderAcc = accDAO.getAccountByUsername((String) session.getAttribute("username"));
+		//System.out.println(senderAcc.getUsername());
 		String fullname = currentAcc.getName();
         String profilePic = filepath + currentAcc.getProfilePic();
         profilePic = profilePic.replaceAll(" ", "%20");
@@ -43,6 +44,40 @@
         ArrayList<FriendRequest> fr = new ArrayList<FriendRequest>();
         //ArrayList<FriendRequest> fr = frDAO.getRequestsBySenderAndReceiver(senderAcc.getId(), currentAcc.getId());
         fr = frDAO.getRequestsBySenderAndReceiver(senderAcc.getId(), currentAcc.getId());
+        
+        
+        //
+        int senderID = senderAcc.getId();
+        int receiverID = currentAcc.getId();
+        String text = " ";
+        boolean addFriendDisabled = false;
+            
+        boolean sent = frDAO.checkIfRequestSent(senderID, receiverID);
+        if(sent == false) {
+        	text = "Add as Friend";
+        	if(frDAO.checkIfRequestSent(receiverID, senderID)) {
+        		boolean accepted = frDAO.checkIfRequestIsAccepted(receiverID, senderID);
+            	if(accepted == false) {
+            		text = "User Sent Request";
+            		addFriendDisabled = true;
+            	}
+            	else {
+            		text = "Unfriend";
+            	}
+        	}        		
+        }
+        
+        else {
+        	boolean accepted = frDAO.checkIfRequestIsAccepted(senderID, receiverID);
+        	if(accepted == false) {
+        		text = "Friend Request Sent";
+        		addFriendDisabled = true;
+        	}
+        	else {
+        		text = "Unfriend";
+        	}
+        }
+        
 	%>
     
 
@@ -88,16 +123,14 @@
                 <div class="container profile-header-center">
                     <img class="profile-picture" src="<%=profilePic%>" /> 
                     <div class="profile-name"><%=fullname%></div>
-                    <%if(fr != null && fr.size() < 1){ %>
-<div class="add-friend-area">
-	<form class="add-friend" method="POST" action="AddFriendServlet">
-		<input id="add-friend-submit" class="btn btn-primary" type="submit" value="Add as Friend">
-		<input type="hidden" name="senderID" value="<%=senderAcc.getId() %>">
-		<input type="hidden" name="receiverID" value="<%=currentAcc.getId() %>">
-		
-	</form>
-</div>  
-<% } %>  
+						<div class="add-friend-area">
+							<form id="add-friend-form" class="add-friend" method="POST" action="AddFriendServlet">
+								<input id="add-friend-submit" class="btn btn-primary" type="submit" value="<%=text%>">
+								<input type="hidden" name="senderID" value="<%=senderAcc.getId() %>">
+								<input type="hidden" name="receiverID" value="<%=currentAcc.getId() %>">
+								
+							</form>
+						</div>  
                 </div>
             </div>
             <div class="profile-content">
@@ -129,7 +162,18 @@
 											
 											String fprofilePic = filepath + friend.getProfilePic();
 											counter++;
-									%><a href="diffprofile.jsp?id=<%=friend.getId()%>"><img src="<%=fprofilePic%>" class="friend-dp"></img></a><%
+                                        
+                                            if(friend.getId() == senderAcc.getId()) {
+									%>
+									<a href="profile.jsp"><img src="<%=fprofilePic%>" class="friend-dp"></img></a>
+									<%
+										} 
+                                            else {
+									%>
+									
+									<a href="diffprofile.jsp?id=<%=friend.getId()%>"><img src="<%=fprofilePic%>" class="friend-dp"></img></a>
+									<%
+                                            }
 										}
 									if(friends.length > 6){
 									%><br><a href="javascript:showHideMoreFriends()" id="showMore">See More Friends</a>
@@ -222,15 +266,24 @@
  
         <script>
         
+        	$('#add-friend-submit').attr('disabled', <%=addFriendDisabled%>);
+        
 	        <%
-        		String filePath = "file:///C:/Users/Jude Michael Teves/Pictures/Artist-Lounge Storage/";
+                int userID = accDAO.getAccountByUsername(currentAcc.getUsername()).getId();
+	   			if(text=="Unfriend") {
+	   			System.out.println("unfriend");
+        	%>
+        	$('#add-friend-form').attr('action', 'DeleteFriendServlet');	
+        	<%
+	   			}
         	%>
             
         	<%
         		try {
 	        		PostDAO postDAO = new PostDAO();
 	            	ArrayList<Post> posts = new ArrayList<Post>();
-	            	posts = postDAO.getRecentPosts(12);
+                    
+	            	posts = postDAO.getPostsByAccount(currentAcc.getId());
 	            	
 	            	for(int i=0; i<posts.size(); i++) {
 	            		Post post = posts.get(i);
@@ -245,7 +298,6 @@
 	            		%>
 	            		addPost(new Post('<%=name%>', '<%=paint%>', '<%=dp%>', '<%=postID%>'));
 	            		<%
-	            		
 	            	}
         		} catch(Exception e) {}
         	
@@ -267,33 +319,132 @@
                 var image = $(this).find(">:first-child").css('background-image');
                 var patt=/\"|\'|\)/g;
                 image = image.split('/').pop().replace(patt,'');
-//                $('#popup-image').attr("src", "stash/"+image);
                 $('#popup-image').css('background-image', 'url(' + 'stash/' + image + ')');
                 
-                addComment(new Comment('assets/Finale.jpg', 'Whoa! cute!', 0));
-                addComment(new Comment('assets/Luna%20Lovegood.png', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam ultrices sit amet nunc at ornare. Aenean ornare, quam ac dapibus scelerisque, turpis risus placerat justo, id tristique mauris orci a ante. Donec pharetra metus id erat facilisis posuere.', 1));
-                addComment(new Comment('assets/Finale.jpg', 'Whoa! cute!', 2));
-                addComment(new Comment('assets/Finale.jpg', 'Whoa! cute!', 3));
-                addComment(new Comment('assets/Finale.jpg', 'Whoa! cute!', 4));
+                //poster's dp
+                var posterDP = $(this).find('.post-dp').attr('src');
+                $('#popup-image-user-dp').attr("src", posterDP);
+                
+                //get post id
+                var id = $(this).attr('id');
+                $('#postID-comment').attr('value', id);
+                
+                //get and set name
+                var name = $(this).find('.post-name').text();
+                $('#popup-image-user-name').html(name);
+                
+                var xhttp3 = new XMLHttpRequest();
+                xhttp3.onreadystatechange = function() {
+                    if (xhttp3.readyState == 4 && xhttp3.status == 200) {
+                        var output = xhttp3.responseText;
+                        $('#post-description').html(output);
+                    }
+                };
+                xhttp3.open("POST", "GetDescriptionServlet", true);
+                xhttp3.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xhttp3.send("postID="+id);
+                
+                //check like
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (xhttp.readyState == 4 && xhttp.status == 200) {
+                        var output = xhttp.responseText.split(" ");
+                        var suffix;
+                        //alert(output);
+                        $('#like').attr('value', output[0]);
+                        if(output[1] == 1)
+                            suffix = " like";
+                        else
+                            suffix = " likes";
+                        $('#numOfLikes').html(output[1]+suffix);
+                    }
+                  };
+                xhttp.open("POST", "CheckLikeServlet", true);
+                xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xhttp.send("postID="+id);
+                
+                //get comments
+                var xhttp2 = new XMLHttpRequest();
+                xhttp2.onreadystatechange = function() {
+                    if (xhttp2.readyState == 4 && xhttp2.status == 200) {
+                        var output = xhttp2.responseText.split("\n");
+                        for(var i=0; i<output.length; i++) {
+                            if(/\S/.test(output[i])) {
+                                //alert(output[i]);
+                                var output2 = output[i].split(" ", 2);
+                                var text = output[i].replace(output2[0]+" "+output2[1]+" ", "");
+                                addComment(new Comment(output2[0], text, output2[1]));
+                            }
+                        }
+                    }
+                  };
+                xhttp2.open("POST", "GetCommentsServlet", true);
+                xhttp2.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xhttp2.send("postID="+id);
+                
             });
-
-            // When the user clicks on the button, open the modal 
-//            $(".post").click(function() {
-//                modal.style.display = "block";
-//                var image = $(this).find(">:first-child").css('background-image');
-//                var patt=/\"|\'|\)/g;
-//                image = image.split('/').pop().replace(patt,'');
-//                $('#popup-image').attr("src", "stash/"+image);
-//            });
 
             // When the user clicks anywhere outside of the modal, close it
             window.onclick = function(event) {
                 if (event.target == modal) {
                     modal.style.display = "none";
+                    emptyCommentSection();
+                    $('#comment-field').val('');
                 }
                 else if (event.target == content) {
                     modal.style.display = "none";
+                    emptyCommentSection();
+                    $('#comment-field').val('');
                 }
+            }
+            
+            function closeAddPost() {
+                addpost.style.display = "none";
+            }
+            
+            $(document).on("submit", "#add-comment-form", function(event) {
+                var $form = $(this);
+                $.post($form.attr("action"), $form.serialize(), function(response) {
+                    $('#comments').empty();
+                    $('#comment-field').val('');
+                    var output = response.split("\n");
+                    for(var i=0; i<output.length; i++) {
+                        if(/\S/.test(output[i])) {
+                            var output2 = output[i].split(" ", 2);
+                            var text = output[i].replace(output2[0]+" "+output2[1]+" ", "");
+                            addComment(new Comment(output2[0], text, output2[1]));
+                        }
+                    }
+                });
+                event.preventDefault(); // Important! Prevents submitting the form.
+            });        
+                    
+            function likeBtn() {
+                var likeVal = $('#like').attr('value');
+                var id = $('#postID-comment').attr('value');
+                
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (xhttp.readyState == 4 && xhttp.status == 200) {   
+                        var output = xhttp.responseText;
+                        //alert(output);
+                        var suffix;
+                        if(output == 1)
+                            suffix = " like";
+                        else
+                            suffix = " likes";
+                        $('#numOfLikes').html(output+suffix);
+                    }
+                  };
+                xhttp.open("POST", "LikeServlet", true);
+                xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xhttp.send("like="+likeVal+"&postID="+id);
+                
+                if(likeVal == "Like")
+                    $('#like').attr('value', "Unlike");
+                else
+                    $('#like').attr('value', "Like");
+                
             }
             
             function closeEditProfile() {
@@ -312,7 +463,7 @@
             		$('#showMore').text('Show More Friends');
             	}
             }
-            
+                    
         </script>
 
 </body>

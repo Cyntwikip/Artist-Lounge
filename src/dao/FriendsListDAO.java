@@ -40,11 +40,13 @@ public class FriendsListDAO implements FriendsListDAOInterface {
 	public boolean deleteFriends(FriendsList friends) {
 		// TODO Auto-generated method stub
 		try{
-			String query="delete from friendslist where user1=? and user2=?";
+			String query="delete from friendslist where (user1=? and user2=?) OR (user1=? and user2=?)";
 			Connection con = JDBCMySQLConnection.getConnection();
 			PreparedStatement preparedStmt = con.prepareStatement(query);
 			preparedStmt.setInt(1,friends.getUser1());	
 			preparedStmt.setInt(2,friends.getUser2());
+			preparedStmt.setInt(3,friends.getUser2());	
+			preparedStmt.setInt(4,friends.getUser1());
 			
 			preparedStmt.execute();
 			preparedStmt.close();
@@ -68,6 +70,7 @@ public class FriendsListDAO implements FriendsListDAOInterface {
 			Connection con = JDBCMySQLConnection.getConnection();
 			PreparedStatement preparedStmt = con.prepareStatement(query);
 			preparedStmt.setInt(1,id);	
+			preparedStmt.setInt(2,id);	
 			
 			ResultSet temp = preparedStmt.executeQuery();
 			while (temp.next()) {

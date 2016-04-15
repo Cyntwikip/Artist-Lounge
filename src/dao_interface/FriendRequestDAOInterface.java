@@ -14,4 +14,10 @@ public interface FriendRequestDAOInterface {
 	//added by CJ
 	public ArrayList<FriendRequest> getRequestsBySenderAndReceiver(int senderID, int receiverID);
 	public ArrayList<FriendRequest> getRequestsByReceiver(int receiverID, int pending);
+	
+	//me
+	public boolean checkIfRequestSent(int senderID, int receiverID);
+	public boolean checkIfRequestIsAccepted(int senderID, int receiverID);
+	public boolean checkIfUserSentRequest(int senderID, int receiverID);
+	
 }
